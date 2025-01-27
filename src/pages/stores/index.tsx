@@ -1,11 +1,6 @@
 import React, { useRef, useEffect, useCallback } from "react";
-
-import Image from "next/image";
-
 import axios from "axios";
 import Loading from "@/components/Loading";
-import { useRouter } from "next/router";
-
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { StoreType } from "@/interface/store";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
@@ -13,9 +8,9 @@ import Loader from "@/components/Loader";
 import SearchFilter from "@/components/SearchFilter";
 import { searchState } from "@/atom/atom";
 import { useRecoilValue } from "recoil";
+import StoreList from "@/components/StoreListBox";
 
 export default function StoreListPage() {
-  const router = useRouter();
   // const { page = "1" }: any = router.query;
   const ref = useRef<HTMLDivElement | null>(null);
   const pageRef = useIntersectionObserver(ref, {});
@@ -91,38 +86,8 @@ export default function StoreListPage() {
         ) : (
           stores?.pages?.map((page, index) => (
             <React.Fragment key={index}>
-              {page.data.map((store: StoreType) => (
-                <li className="flex justify-between gap-x-6 py-5 cursor-pointer hover:bg-gray-300" key={store.id} onClick={()=> router.push(`/stores/${store.id}`)}>
-                  <div className="flex gap-x-4">
-                    <Image
-                      src={
-                        store?.category
-                          ? `/images/markers/${store?.category}.png`
-                          : "/images/markers/default.png"
-                      }
-                      width={48}
-                      height={48}
-                      alt="아이콘 이미지"
-                    />
-                    <div>
-                      <div className="text-sm font-semibold leading-6 text-gray-900">
-                        {store?.name}
-                      </div>
-                      <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                        {store?.storeType}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="hidden sm:flex sm:flex-col sm:items-end">
-                    <div className="text-sm font-semibold leading-6 text-gray-900">
-                      {store?.address}
-                    </div>
-                    <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                      {store?.phone || "번호없음"} | {store?.foodCertifyName} |{" "}
-                      {store?.category}
-                    </div>
-                  </div>
-                </li>
+              {page.data.map((store: StoreType, i : number) => (
+                <StoreList store={store} i = {i} key = {store.id} />
               ))}
             </React.Fragment>
           ))
