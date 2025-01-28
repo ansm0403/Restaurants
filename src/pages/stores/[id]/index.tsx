@@ -1,15 +1,18 @@
 import { useRouter } from "next/router";
+
 import axios from "axios";
+
 import Loader from "@/components/Loader";
 import Map from "@/components/Map";
-import { useQuery } from "@tanstack/react-query";
-import { StoreType } from "@/interface/store";
 import Marker from "@/components/Marker";
-import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
+
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Like from "@/components/Like";
-
+import Comments from "@/components/comments";
+import { StoreType } from "@/interface/store";
+import { useQuery } from "@tanstack/react-query";
 
 export default function StorePage() {
   const router = useRouter();
@@ -26,9 +29,9 @@ export default function StorePage() {
     isFetching,
     isSuccess,
     isError,
-  } = useQuery({
+  } = useQuery<StoreType>({
     queryKey : [`store-${id}`], 
-    queryFn : fetchStore, 
+    queryFn : fetchStore,
     enabled: !!id,
     refetchOnWindowFocus: false,
   });
@@ -79,7 +82,7 @@ export default function StorePage() {
           </div>
           {status === "authenticated" && store && (
             <div className="flex items-center gap-4 px-4 py-3">
-              <Like storeId={store?.id}/>
+              {<Like storeId={store.id} />}
               <Link
                 className="underline hover:text-gray-400 text-sm"
                 href={`/stores/${store?.id}/edit`}
@@ -159,10 +162,13 @@ export default function StorePage() {
         </div>
       </div>
       {isSuccess && (
-        <div className="overflow-hidden w-full mb-20 max-w-5xl mx-auto max-h-[600px]">
-          <Map lat={store?.lat} lng={store?.lng} zoom={1} />
-          <Marker store={store} />
-        </div>
+        <>
+          <div className="overflow-hidden w-full mb-20 max-w-5xl mx-auto max-h-[600px]">
+            <Map lat={store?.lat} lng={store?.lng} zoom={1} />
+            <Marker store={store} />
+          </div>
+          <Comments storeId={store.id} />
+        </>
       )}
     </>
   );
