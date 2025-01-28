@@ -14,5 +14,4 @@ jobs:
         with:
           node-version: '20' 
       - run: yarn install
-      
       - run: CI='false' npx prisma generate && yarn build
