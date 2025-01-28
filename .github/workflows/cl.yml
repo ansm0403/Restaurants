@@ -13,6 +13,6 @@ jobs:
         uses: actions/setup-node@v2                           
         with:
           node-version: '20' 
-      - run: npm install
+      - run: yarn install
       
-      - run: CI='false' npx prisma generate && next build
+      - run: CI='false' npx prisma generate && yarn build
