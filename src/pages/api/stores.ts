@@ -26,7 +26,7 @@ export default async function handler(
     // 데이터 생성을 처리한다
     const formData = req.body;
     const headers = {
-      Authorization: `KakaoAK ${process.env.KAKAO_CLIENT_ID}`,
+      Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}`,
     };
 
     const { data } = await axios.get(
@@ -45,7 +45,7 @@ export default async function handler(
     // 데이터 수정을 처리한다
     const formData = req.body;
     const headers = {
-      Authorization: `KakaoAK ${process.env.KAKAO_CLIENT_ID}`,
+      Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}`,
     };
 
     const { data } = await axios.get(

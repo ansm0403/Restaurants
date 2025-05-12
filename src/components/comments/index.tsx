@@ -23,7 +23,7 @@ export default function Comments({ storeId }: CommentProps) {
     );
 
     return data as CommentApiResponse;
-  };
+  }; 
 
   const { data: comments, refetch } = useQuery({
     queryKey : [`comments-${storeId}-${page}`],
