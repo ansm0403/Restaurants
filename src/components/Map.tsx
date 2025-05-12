@@ -31,7 +31,7 @@ export default function Map({ lat, lng, zoom }: MapProps) {
         level: zoom ?? location.zoom
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
-
+      console.log("지도는 : ", map);
       setMap(map);
     });
   };
